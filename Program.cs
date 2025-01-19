@@ -1,28 +1,33 @@
-﻿namespace OOPTask
+﻿namespace InterfaceTask
 {
     internal class Program
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Enter Order ID:");
+            int orderId = int.Parse(Console.ReadLine()!);
 
-            Book book = new Book();
-            DateTime BorrowDate = new DateTime(2024, 11, 15);
-            BorrowedBook borrowedBook = new BorrowedBook(30 , book, "Mohamed", BorrowDate);
+            Console.WriteLine("Enter Customer Name:");
+            string customerName = Console.ReadLine()!;
 
-            
+            Console.WriteLine("Enter Order Amount:");
+            decimal orderAmount = decimal.Parse(Console.ReadLine()!);
 
-            Console.WriteLine("================When the Book Is Borrowed====================");
-            borrowedBook.CheckOut();
+            Console.WriteLine("Enter Order Type (Online or In-Store):");
+            string orderType = Console.ReadLine()!;
 
+            Order order = new Order
+            {
+                OrderId = orderId,
+                CustomerName = customerName,
+                OrderAmount = orderAmount
+            };
 
-            Console.WriteLine("================When the Book Is Returned====================");
-            borrowedBook.ReturnItem();
+            order.AssignOrderProcessor(orderType);
 
+            decimal finalAmount= order.GetFinalOrderAmount();
 
-            int Days = borrowedBook.CalculateBorrowDuration(BorrowDate);
-            Console.WriteLine($"The Number of Days Since The Book Is Borrowed ==> {Days}");
-
-            
+            Console.WriteLine($"Order {order.OrderId} processed for {order.CustomerName}. Final amount after {orderType} discount: ${finalAmount}");
         }
     }
 }
